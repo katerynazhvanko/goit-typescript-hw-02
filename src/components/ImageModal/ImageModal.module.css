@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.photo {
+  display: block;
+  width: 350px;
+  margin-bottom: 10px;
+}
+.description {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.author {
+  font-size: 17px;
+}
+.heart {
+  color: red;
+  margin-right: 5px;
+}
+.likes {
+  font-size: 15px;
+  font-style: italic;
+  margin-bottom: 5px;
+}
