@@ -7,7 +7,7 @@ export interface Image {
   };
   description?: string;
   user?: {
-    name: string | undefined;
+    name: string | null;
   };
   likes?: number;
 }
