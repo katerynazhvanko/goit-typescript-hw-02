@@ -1,34 +1,35 @@
 import { useEffect, useState } from "react";
-import { fetchImages } from "./utils/images-api";
+import { fetchImages } from "../utils/images-api";
+import { Image } from "./App.types";
 
-import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
-import ImageGallery from "./components/ImageGallery/ImageGallery";
-import SearchBar from "./components/SearchBar/SearchBar";
-import Loader from "./components/Loader";
-import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
-import ImageModal from "./components/ImageModal/ImageModal";
+import LoadMoreBtn from "../components/LoadMoreBtn/LoadMoreBtn";
+import ImageGallery from "../components/ImageGallery/ImageGallery";
+import SearchBar from "../components/SearchBar/SearchBar";
+import Loader from "../components/Loader";
+import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
+import ImageModal from "../components/ImageModal/ImageModal";
 
 import toast from "react-hot-toast";
 
 export default function App() {
-  const [images, setImages] = useState([]);
-  const [page, setPage] = useState(1); //стан на пагінацію
-  const [isLoading, setIsLoading] = useState(false); //стан на завантаження
-  const [error, setError] = useState(false); // стан на появу помилки
-  const [searchQuery, setSearchQuery] = useState(""); //стан для данних з пошуку
+  const [items, setItems] = useState<Image[]>([]);
+  const [page, setPage] = useState<number>(1); //стан на пагінацію
+  const [isLoading, setIsLoading] = useState<boolean>(false); //стан на завантаження
+  const [error, setError] = useState<boolean>(false); // стан на появу помилки
+  const [searchQuery, setSearchQuery] = useState<string>(""); //стан для данних з пошуку
   // стани для модального вікна
-  const [openModal, setOpenModal] = useState(false);
-  const [modalContent, setModalContent] = useState(null);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [modalContent, setModalContent] = useState<Image | null>(null);
 
   // get fetch
-  const handleSearch = async (newQuery) => {
+  const handleSearch = async (newQuery: string) => {
     console.log(newQuery);
     if (newQuery === searchQuery) {
       return toast.error("The same search query!");
     }
     setSearchQuery(newQuery);
     setPage(1); //для скидання сторінок при іншому пошуку
-    setImages([]); //скидаємо масив данних, щоб новий пошук не додавався до нового
+    setItems([]); //скидаємо масив данних, щоб новий пошук не додавався до нового
   };
 
   // +1 page
@@ -47,7 +48,7 @@ export default function App() {
         setIsLoading(true);
         setError(false);
         const data = await fetchImages(searchQuery, page);
-        setImages((prevImages) => {
+        setItems((prevImages) => {
           return [...prevImages, ...data];
         }); // щоб не оновлювався пошук, а просто додавались нові
         setIsLoading(false);
@@ -61,7 +62,7 @@ export default function App() {
   }, [page, searchQuery]);
 
   //Modal Window
-  const handleOpenModal = (modalContent) => {
+  const handleOpenModal = (modalContent: Image) => {
     setOpenModal(true);
     setModalContent(modalContent);
   };
@@ -75,11 +76,11 @@ export default function App() {
     <>
       <SearchBar onSearch={handleSearch} />
 
-      {images.length > 0 && (
-        <ImageGallery images={images} onOpenModal={handleOpenModal} />
+      {items.length > 0 && (
+        <ImageGallery items={items} onOpenModal={handleOpenModal} />
       )}
       {isLoading && <Loader />}
-      {images.length > 0 && !isLoading && (
+      {items.length > 0 && !isLoading && (
         <LoadMoreBtn onLoadMoreBtn={handleLoadMoreBtn} />
       )}
       {error && <ErrorMessage />}
@@ -87,7 +88,7 @@ export default function App() {
         <ImageModal
           openModal={openModal}
           handleCloseModal={handleCloseModal}
-          modalImg={modalContent}
+          modalItem={modalContent}
         />
       )}
     </>
