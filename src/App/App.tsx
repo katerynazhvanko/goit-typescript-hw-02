@@ -9,7 +9,7 @@ import Loader from "../components/Loader";
 import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
 import ImageModal from "../components/ImageModal/ImageModal";
 
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function App() {
   const [items, setItems] = useState<Image[]>([]);
@@ -91,6 +91,7 @@ export default function App() {
           modalItem={modalContent}
         />
       )}
+      <Toaster position="top-right" />
     </>
   );
 }

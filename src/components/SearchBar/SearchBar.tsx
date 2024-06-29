@@ -1,6 +1,6 @@
 import { Field, Formik, Form, FormikHelpers } from "formik";
 import { CiSearch } from "react-icons/ci";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 import css from "./SearchBar.module.css";
 
@@ -30,7 +30,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           <button type="submit" className={css.button}>
             <CiSearch size="25" />
           </button>
-          <Toaster position="top-right" />
           <Field
             autoComplete="off"
             autoFocus
