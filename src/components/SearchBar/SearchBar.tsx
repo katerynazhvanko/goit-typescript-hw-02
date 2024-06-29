@@ -1,6 +1,5 @@
 import { Field, Formik, Form, FormikHelpers } from "formik";
 import { CiSearch } from "react-icons/ci";
-import toast from "react-hot-toast";
 
 import css from "./SearchBar.module.css";
 
@@ -17,13 +16,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           values: { query: string },
           actions: FormikHelpers<{ query: string }>
         ) => {
-          if (values.query.trim() === "") {
-            toast.error("Please, add valid text");
-            actions.setSubmitting(false);
-          }
           onSearch(values.query);
           actions.resetForm();
-          actions.setSubmitting(false);
         }}
       >
         <Form className={css.form}>
