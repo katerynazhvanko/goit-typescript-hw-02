@@ -1,17 +1,26 @@
-import { Field, Formik, Form } from "formik";
+import { Field, Formik, Form, FormikHelpers } from "formik";
 import { CiSearch } from "react-icons/ci";
 import toast, { Toaster } from "react-hot-toast";
 
 import css from "./SearchBar.module.css";
 
-export default function SearchBar({ onSearch }) {
+interface SearchBarProp {
+  onSearch: (query: string) => void;
+}
+
+const SearchBar: React.FC<SearchBarProp> = ({ onSearch }) => {
   return (
     <header className={css.header}>
       <Formik
         initialValues={{ query: "" }}
-        onSubmit={(values, actions) => {
+        onSubmit={(
+          values: { query: string },
+          actions: FormikHelpers<{ query: string }>
+        ) => {
           if (values.query.trim() === "") {
-            return toast.error("Please, add valid text");
+            toast.error("Please, add valid text");
+            actions.setSubmitting(false);
+            return;
           }
           onSearch(values.query);
           actions.resetForm();
@@ -34,4 +43,6 @@ export default function SearchBar({ onSearch }) {
       </Formik>
     </header>
   );
-}
+};
+
+export default SearchBar;
