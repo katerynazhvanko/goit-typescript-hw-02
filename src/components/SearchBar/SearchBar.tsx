@@ -17,14 +17,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           values: { query: string },
           actions: FormikHelpers<{ query: string }>
         ) => {
-          // if (values.query.trim() === "") {
-          //   toast.error("Please, add valid text");
-          //   actions.setSubmitting(false);
-          //   return;
-          // }
+          if (values.query.trim() === "") {
+            toast.error("Please, add valid text");
+            actions.setSubmitting(false);
+          }
           onSearch(values.query);
           actions.resetForm();
-          // actions.setSubmitting(false);
+          actions.setSubmitting(false);
         }}
       >
         <Form className={css.form}>
