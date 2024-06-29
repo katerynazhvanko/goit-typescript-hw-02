@@ -4,11 +4,11 @@ import toast, { Toaster } from "react-hot-toast";
 
 import css from "./SearchBar.module.css";
 
-interface SearchBarProp {
+interface SearchBarProps {
   onSearch: (query: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProp> = ({ onSearch }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   return (
     <header className={css.header}>
       <Formik
@@ -20,10 +20,11 @@ const SearchBar: React.FC<SearchBarProp> = ({ onSearch }) => {
           if (values.query.trim() === "") {
             toast.error("Please, add valid text");
             actions.setSubmitting(false);
-            return;
+            return; 
           }
           onSearch(values.query);
           actions.resetForm();
+          actions.setSubmitting(false);
         }}
       >
         <Form className={css.form}>
