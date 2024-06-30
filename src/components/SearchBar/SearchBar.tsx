@@ -20,6 +20,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           if (values.query.trim() === "") {
             toast.error("Please, add valid text");
             actions.setSubmitting(false);
+            return;
           }
           onSearch(values.query);
           actions.resetForm();
