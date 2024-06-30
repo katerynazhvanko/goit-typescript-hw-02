@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import css from "./SearchBar.module.css";
 
 interface SearchBarProps {
-  onSearch: (query: string) => void;
+  onSearch: (query: string) => void | Promise<any>;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
